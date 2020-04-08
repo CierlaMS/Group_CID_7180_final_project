@@ -6,3 +6,40 @@ b. find variations
 https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 c. find central conserved regions
 https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-019-3115-8
+
+import sys
+
+from Bio.Blast import NCBIWWW
+
+sequence_data = open("blast_example.fasta").read()
+sequence_data
+
+result_handle = NCBIWWW.qblast("blastn", "nt", sequence_data)
+result_handle
+<_io.StringIO object at ________>
+
+from Bio import SeqIO
+seq_record = next(SeqIO.parse(open('blast_example.fasta),'fasta'))
+seq_record.id
+'sequence'
+seq_record.seq
+Seq('acgt...',
+SingleLetterAlphabet())
+
+result_handle = NCBIWWW.qblast("blastn", "nt", sequence_data)
+result_handle
+<_io.StringIO object at ________>
+
+with open)'results.xml', 'w') as save_file:
+    blast_results = result_handle.read()
+    save_file.write(blast_results)
+
+E_VALUE_THRESH = 1e-20 
+for record in NCBIXML.parse(open("results.xml")): 
+    if record.alignments: 
+       print("\n") 
+       print("query: %s" % record.query[:100]) 
+       for align in record.alignments: 
+          for hsp in align.hsps: 
+             if hsp.expect < E_VALUE_THRESH: 
+                print("match: %s " % align.title[:100])
